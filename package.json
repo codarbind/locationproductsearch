@@ -1,0 +1,28 @@
+{
+  "name": "tradepotbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ."
+  },
+  "author": "abdwahab adekola",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/storage": "^7.9.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.0.0",
+    "joi": "^17.12.2",
+    "mongo": "^0.1.0",
+    "mongoose": "^8.2.4",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "type": "module"
+}
