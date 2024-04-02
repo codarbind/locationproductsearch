@@ -7,40 +7,26 @@ const uploadFileToFirestore = async (file) => {
   const bucket = storage.bucket(bucketName);
   const fileName = Date.now() + "-" + file.originalname;
   const fileUpload = bucket.file(fileName);
+  const filePath = `./uploads/${file.originalname}`;
   return new Promise((resolve, reject) => {
-    fs.createReadStream("./uploads/launcher_icon.png")
+    fs.createReadStream(filePath)
       .pipe(fileUpload.createWriteStream())
       .on("error", function (err) {
-        console.log({ err });
+        console.log(err);
         reject(err);
       })
-      .on("finish", function (here) {
-        console.log({ here });
+      .on("finish", function () {
         const url = `https://storage.googleapis.com/${bucketName}/${fileName}`;
+        fs.unlink(filePath, (err) => {
+          /* if (err) {
+            console.error("Error deleting file:", err);
+            return;
+          }
+          console.log("File deleted successfully");*/
+        });
         resolve(url);
       });
   });
-
-  /* const stream = fileUpload.createWriteStream({
-    metadata: {
-      contentType: file.mimetype,
-    },
-    resumable: false,
-  });
-
-  return new Promise((resolve, reject) => {
-    stream.on("error", (error) => {
-      console.log(error);
-      reject(error);
-    });
-
-    stream.on("finish", () => {
-      const url = `https://storage.googleapis.com/${bucketName}/${fileName}`;
-      resolve(url);
-    });
-
-    stream.end(file.buffer);
-  });*/
 };
 
 export default uploadFileToFirestore;

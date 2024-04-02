@@ -23,6 +23,7 @@ const validateSchema = (schema) => (req, res, next) => {
     return res.status(400).json({ erroras: error.details[0].message });
   }
   req.validatedData = value;
+
   next();
 };
 

@@ -8,7 +8,7 @@ export async function uploadProduct(req, res) {
     const image = req.file;
 
     let imageurl = await uploadFileToFirestore(image);
-    console.log({ imageurl });
+
     const product = new Product({
       name,
       image: imageurl,

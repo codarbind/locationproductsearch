@@ -31,6 +31,7 @@ admin.initializeApp({
 import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/product.js";
 import commentRoutes from "./routes/comment.js";
+import replyRoutes from "./routes/reply.js";
 import bp from "body-parser";
 
 app.use(
@@ -47,6 +48,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/replies", replyRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const PORT = process.env.PORT || 3000;

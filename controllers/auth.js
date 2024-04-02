@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 
 import jsonwebtoken from "jsonwebtoken";
+import getProductsByLocation from "../services/getproductsbylocation.js";
 
 export async function signup(req, res) {
   try {
@@ -17,14 +18,13 @@ export async function signup(req, res) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ email, password: hashedPassword, address });
     let saved = await user.save();
-    console.log({ saved });
+
     res.status(201).json({
       success: true,
       message: "User created successfully",
       data: { email: saved.email, id: saved._id },
     });
   } catch (error) {
-    console.log(error.message);
     res.status(500).json({ error: "something went wrong" });
   }
 }
@@ -47,9 +47,12 @@ export async function login(req, res) {
         expiresIn: "1h",
       }
     );
-    res
-      .status(200)
-      .json({ data: { email: user.email, token }, message: "login succesful" });
+
+    let closeproducts = await getProductsByLocation(user.address);
+    res.status(200).json({
+      data: { email: user.email, token, closeproducts },
+      message: "login succesful",
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
